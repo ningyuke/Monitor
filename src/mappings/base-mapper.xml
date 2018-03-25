@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="baseMapper">
+
+	<select id="initTableField" resultType="java.util.HashMap">
+	<!-- select TABLE_NAME,COLUMN_NAME from (select t.name table_name,
+	(select name+',' from syscolumns where id=a.id
+			for xml path('')) as column_name
+			from syscolumns a inner join sysobjects t on a.id = t.id and t.name in (${table_name})) a 
+	 -->
+		select TABLE_NAME,group_concat(COLUMN_NAME) COLUMN_NAME 
+		from information_schema.columns 
+		where table_name in (${table_name})  and table_schema = ${database_name}  GROUP BY TABLE_NAME
+	</select>
+	<!-- 以下与实体类的中字段一致 -->
+	<select id="findByWhere" resultType="java.util.HashMap">
+		select * from  ${table} ${where}
+	</select>
+	
+	<select id="findByList" resultType="java.util.HashMap">
+	   <if test="table !=null and table !='' and fleids!=null and fleids!=''">
+		 select * from   ${table}  where (${fleids}) in (${fleids})
+	   </if>
+	   <if test="table==null or table==''">
+	     select 1 from dual where 1=1
+	   </if>  
+	</select>
+
+	<select id="findByPage" resultType="java.util.HashMap">
+		 <if test="table !=null and table !='' and fleids!=null and fleids!=''">
+		 select * from   ${table}  where (${fleids}) in (${fleids})
+	   </if>
+	   <if test="table==null or table==''">
+	     select 1 from dual where 1=1
+	   </if> 
+	</select>
+	
+	<select id="findById" resultType="java.util.HashMap">
+		 <if test="table !=null and table !='' and fleids!=null and fleids!=''">
+		 select * from   ${table}  where (${fleids}) in (${fleids})
+	   </if>
+	   <if test="table==null or table==''">
+	     select 1 from dual where 1=1
+	   </if> 
+	</select>
+	
+	<select id="findByNames" resultType="java.util.HashMap">
+		 <if test="table !=null and table !='' and fleids!=null and fleids!=''">
+		 select * from   ${table}  where (${fleids}) in (${fleids})
+	   </if>
+	   <if test="table==null or table==''">
+	     select 1 from dual where 1=1
+	   </if> 
+	</select>
+
+	<select id="findbyFrist" resultType="java.util.HashMap">
+		 <if test="table !=null and table !='' and fleids!=null and fleids!=''">
+		 select * from   ${table}  where (${fleids}) in (${fleids})
+	   </if>
+	   <if test="table==null or table==''">
+	     select 1 from dual where 1=1
+	   </if> 
+	</select>
+	
+	<select id="findByAttribute" resultType="java.util.HashMap">
+		 <if test="table !=null and table !='' and fleids!=null and fleids!=''">
+		 select * from   ${table}  where (${fleids}) in (${fleids})
+	   </if>
+	   <if test="table==null or table==''">
+	     select 1 from dual where 1=1
+	   </if> 
+	</select>
+
+	<insert id="addEntity" useGeneratedKeys="true" keyProperty="id" >
+		insert into (${fleids}) values (${values})
+	</insert>
+	
+	<insert id="batchSave" >
+	   for( ){
+	   		insert into ({fleids}) values ({values})
+	   }
+	</insert>
+	
+	<update id="batchUpdate">
+	 	for( ){
+	   		update table set ({fleids}) where id = ((id));
+	   	}
+	</update>
+
+	<update id="editEntity">
+		update ${table} set (${fleids}) where id = (${id})
+	</update>
+	
+	<delete id="deleteByIds">
+		delete from ${table} where (${id}) in (${ids})
+	</delete>
+	
+	<delete id="deleteByNames">
+		delete from ${table} where (${fleids}) in (${fleids})
+	</delete>
+	
+	<delete id="deleteByAttribute">
+		delete from ${table} where (${fleids}) in (${fleids})
+	</delete>
+
+</mapper>

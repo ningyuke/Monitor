@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="logDataMapper">
+   <select id="findLogDataByParam" parameterType="com.monitoring.entity.DataFormMap" resultType="com.monitoring.entity.DataFormMap">
+       SELECT * FROM ly_data ld WHERE 1=1
+       <if test="type!=null and type>0">
+          and ld.type=#{type} 
+       </if> 
+        <if test="startTime!=null and startTime!=''">
+           and createTime &gt;=#{startTime}
+       </if>
+       <if test="endTime!=null and endTime!=''">
+           and createTime &lt;=#{endTime}
+       </if> 
+       ORDER BY ld.createTime DESC
+   </select>
+   <select id="findLogDataCountByParam" parameterType="com.monitoring.entity.DataFormMap" resultType="com.monitoring.entity.DataFormMap">
+      select * from ly_data ld WHERE 1=1
+       <if test="type!=null and type>0">
+            and ld.type=#{type} 
+       </if>
+       <if test="startTime!=null and startTime!=''">
+           and createTime &gt;=#{startTime}
+       </if>
+       <if test="endTime!=null and endTime!=''">
+           and createTime &lt;=#{endTime}
+       </if> 
+   </select>
+</mapper>

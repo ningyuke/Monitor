@@ -1,0 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<footer class="panel-footer text-center bg-light lter">
+<button id="subsucess" type="submit" class="btn btn-success btn-s-xs">Submit</button>
+<button type="button" class="btn btn-default btn-s-xs" onclick="closeWin();">Cancel</button>
+</footer> 
